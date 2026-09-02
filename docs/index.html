@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Boat Lettering Size Calculator — how big should your boat name be?</title>
+<meta name="description" content="Free calculator: the right letter height for your boat name, the exact width it needs on your transom, and how far away it stays readable. Built by a stainless lettering shop.">
+<meta property="og:title" content="Boat Lettering Size Calculator">
+<meta property="og:description" content="How big should your boat name be? Letter height, total width and readable distance — calculated for your boat.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='14' fill='%231a1917'/><text x='50' y='68' font-size='52' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'>M²</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Bitter:ital,wght@0,400;0,600;1,400&family=Playfair+Display:wght@600&family=Cinzel:wght@600&family=Great+Vibes&family=Oswald:wght@600&family=Marcellus&family=Pacifico&display=swap">
+<style>
+  :root {
+    --bg: #fbf9f5;
+    --card: #ffffff;
+    --ink: #1a1917;
+    --ink-soft: #5b564d;
+    --ink-faint: #8c8578;
+    --line: #e6e1d6;
+    --accent: #14456b;
+    --accent-soft: #eaf0f5;
+    --warn: #8a5a1c;
+    --warn-bg: #fbf2e6;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Bitter", Georgia, serif;
+    line-height: 1.65;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  main { flex: 1; width: 100%; max-width: 860px; margin: 0 auto; padding: 0 20px; }
+  header { text-align: center; padding: 56px 0 6px; }
+  .waves { color: var(--accent); font-size: 20px; letter-spacing: 7px; }
+  h1 {
+    font-family: "Jost", "Segoe UI", sans-serif;
+    font-weight: 700;
+    font-size: clamp(28px, 5.4vw, 42px);
+    line-height: 1.14;
+    margin: 12px 0 14px;
+  }
+  .sub { color: var(--ink-soft); font-size: 16.5px; max-width: 52ch; margin: 0 auto; }
+
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: 0 2px 14px rgba(26, 25, 23, 0.06);
+    padding: 28px;
+    margin-top: 32px;
+  }
+  .row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .field { flex: 1 1 200px; }
+  label {
+    display: block;
+    font-family: "Jost", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 6px;
+  }
+  input[type=text], input[type=number] {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    color: var(--ink);
+    font-family: "Jost", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 12px 20px;
+  }
+  input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  input::placeholder { color: var(--ink-faint); font-weight: 400; }
+  .units { display: inline-flex; border: 1px solid var(--ink); border-radius: 999px; overflow: hidden; }
+  .units button {
+    background: var(--card); border: none; cursor: pointer;
+    font-family: "Jost", sans-serif; font-size: 13px; font-weight: 600;
+    padding: 9px 18px; color: var(--ink);
+  }
+  .units button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+  .fonts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+  .fonts button {
+    background: var(--card); border: 1px solid var(--line); border-radius: 999px;
+    cursor: pointer; font-size: 16px; padding: 7px 16px; color: var(--ink);
+  }
+  .fonts button[aria-pressed="true"] { border-color: var(--ink); background: var(--bg); box-shadow: inset 0 0 0 1px var(--ink); }
+  .fonts button:hover { border-color: var(--accent); }
+
+  .result { margin-top: 26px; display: none; }
+  .headline {
+    background: var(--accent-soft);
+    border-radius: 14px;
+    padding: 24px 20px;
+    text-align: center;
+  }
+  .headline .k {
+    font-family: "Jost", sans-serif; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+  }
+  .headline .v {
+    font-family: "Jost", sans-serif; font-weight: 700;
+    font-size: clamp(34px, 8vw, 54px); line-height: 1.1; margin-top: 4px;
+  }
+  .headline .n { color: var(--ink-soft); font-size: 15px; }
+  .stats { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 16px; }
+  .stat {
+    flex: 1 1 150px; border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px;
+  }
+  .stat .k {
+    font-family: "Jost", sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint);
+  }
+  .stat .v { font-family: "Jost", sans-serif; font-size: 22px; font-weight: 600; line-height: 1.3; }
+  .stat .n { color: var(--ink-soft); font-size: 13px; line-height: 1.45; }
+
+  .preview {
+    margin-top: 18px; border: 1px solid var(--line); border-radius: 12px;
+    padding: 22px 18px 14px; overflow-x: auto; background: var(--bg);
+  }
+  .preview-cap {
+    font-family: "Jost", sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint);
+    margin-bottom: 12px;
+  }
+  .note {
+    display: flex; gap: 10px; align-items: flex-start;
+    background: var(--warn-bg); border-left: 3px solid var(--warn);
+    border-radius: 6px; padding: 12px 14px; margin-top: 14px;
+    font-size: 14.5px; color: var(--warn);
+  }
+  .cta { text-align: center; margin: 24px 0 0; font-size: 15.5px; color: var(--ink-soft); }
+  .cta a { color: var(--accent); font-weight: 600; }
+
+  details.embed { margin-top: 30px; }
+  details.embed summary {
+    font-family: "Jost", sans-serif; font-weight: 600; font-size: 15px;
+    cursor: pointer; color: var(--accent);
+  }
+  details.embed p { font-size: 14.5px; color: var(--ink-soft); margin: 10px 0; }
+  textarea {
+    width: 100%; height: 90px; font-family: ui-monospace, Consolas, monospace; font-size: 12.5px;
+    border: 1px solid var(--line); border-radius: 10px; padding: 12px; background: var(--card); color: var(--ink);
+    resize: vertical;
+  }
+
+  .method { margin-top: 40px; }
+  .method h2 {
+    font-family: "Jost", sans-serif; font-weight: 700; font-size: 22px; margin-bottom: 8px;
+  }
+  .method p, .method li { color: var(--ink-soft); font-size: 15.5px; }
+  .method ul { padding-left: 20px; }
+  .method li { margin: 5px 0; }
+
+  footer {
+    border-top: 1px solid var(--line); margin-top: 52px; padding: 22px 20px 30px;
+    text-align: center; color: var(--ink-faint); font-size: 13px;
+  }
+  footer a { color: var(--ink-soft); }
+
+  /* embedded mode: strip everything but the tool */
+  body.embed header, body.embed .method, body.embed details.embed, body.embed footer { display: none; }
+  body.embed main { padding-top: 14px; }
+  body.embed .panel { margin-top: 0; box-shadow: none; }
+  .embed-credit { display: none; text-align: center; font-size: 13px; margin-top: 14px; color: var(--ink-faint); }
+  body.embed .embed-credit { display: block; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="waves" aria-hidden="true">~ ~ ~</div>
+    <h1>How big should your boat name be?</h1>
+    <p class="sub">Enter your boat and get the letter height that fits, the exact width the name needs on your transom, and how far away it stays readable.</p>
+  </header>
+
+  <section class="panel">
+    <div class="row">
+      <div class="field" style="flex: 2 1 260px;">
+        <label for="name">Boat name</label>
+        <input id="name" type="text" value="SERENITY" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="loa">Boat length <span id="loa-unit">(ft)</span></label>
+        <input id="loa" type="number" min="8" max="400" step="1" value="42">
+      </div>
+      <div class="field">
+        <label for="transom">Transom width <span id="tw-unit">(ft)</span> — optional</label>
+        <input id="transom" type="number" min="1" max="80" step="0.5" placeholder="e.g. 13">
+      </div>
+    </div>
+    <div class="row" style="margin-top: 18px; align-items: flex-start;">
+      <div class="field" style="flex: 0 0 auto;">
+        <label>Units</label>
+        <div class="units" role="group" aria-label="Units">
+          <button type="button" id="u-imp" aria-pressed="true">Feet / inches</button>
+          <button type="button" id="u-met" aria-pressed="false">Metres / cm</button>
+        </div>
+      </div>
+      <div class="field" style="flex: 1 1 300px;">
+        <label>Font</label>
+        <div class="fonts" id="fonts" role="group" aria-label="Font"></div>
+      </div>
+    </div>
+
+    <div class="result" id="result">
+      <div class="headline">
+        <div class="k">Recommended letter height</div>
+        <div class="v" id="r-height"></div>
+        <div class="n" id="r-range"></div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="k">Name width</div>
+          <div class="v" id="r-width"></div>
+          <div class="n" id="r-fit"></div>
+        </div>
+        <div class="stat">
+          <div class="k">Clearly readable</div>
+          <div class="v" id="r-read"></div>
+          <div class="n">Comfortable reading distance — the next slip over.</div>
+        </div>
+        <div class="stat">
+          <div class="k">Recognisable</div>
+          <div class="v" id="r-far"></div>
+          <div class="n">Still identifiable across the harbour.</div>
+        </div>
+      </div>
+
+      <div class="preview">
+        <div class="preview-cap" id="prev-cap">To scale — name against transom width</div>
+        <div id="prev"></div>
+      </div>
+
+      <div id="notes"></div>
+
+      <p class="cta" id="cta"></p>
+      <p class="embed-credit">Boat lettering size calculator by <a href="https://www.msquaremarine.com" target="_blank" rel="noopener">M.Square Marine</a></p>
+    </div>
+  </section>
+
+  <details class="embed">
+    <summary>Put this calculator on your own site (free)</summary>
+    <p>Copy this snippet — it embeds the calculator with a credit link. No tracking, no scripts of ours on your page.</p>
+    <textarea id="embed-code" readonly></textarea>
+  </details>
+
+  <section class="method">
+    <h2>How the numbers are worked out</h2>
+    <p>We laser-cut boat lettering every day, so these are the rules we apply to real orders:</p>
+    <ul>
+      <li><strong>Letter height:</strong> roughly one inch of cap height for every five feet of boat length, kept within 3–24 in. Below 3 in a name disappears against the hull; above 24 in it starts to fight the transom.</li>
+      <li><strong>Name width:</strong> measured from the actual letterforms of the font you picked — not an estimate. Script fonts run much wider than condensed ones at the same height.</li>
+      <li><strong>Transom fit:</strong> a name should sit within about 70 % of the transom width, so it is framed rather than crammed.</li>
+      <li><strong>Readable distance:</strong> about 10 ft per inch of cap height for comfortable reading, 30 ft per inch to still recognise the name.</li>
+      <li><strong>US registration numbers</strong> are a separate rule: plain block letters, at least 3 in high, in a colour that contrasts with the hull. The name and hailing port have no federal size requirement — only documented vessels must display them.</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  Free tool by <a href="https://www.msquaremarine.com">M.Square Marine</a> — laser-cut 316L stainless steel boat lettering ·
+  <a href="https://names.msquaremarine.com">Boat name rank</a> ·
+  <a href="https://github.com/msquaremarinesolutions-create/boat-lettering-size">Source on GitHub</a>
+</footer>
+
+<canvas id="measure" width="10" height="10" hidden></canvas>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+
+  var FONTS = [
+    { id: "Jost", label: "Jost", weight: "700", script: false },
+    { id: "Marcellus", label: "Marcellus", weight: "400", script: false },
+    { id: "Playfair Display", label: "Playfair", weight: "600", script: false },
+    { id: "Cinzel", label: "Cinzel", weight: "600", script: false },
+    { id: "Oswald", label: "Oswald", weight: "600", script: false },
+    { id: "Bitter", label: "Bitter", weight: "600", script: false },
+    { id: "Great Vibes", label: "Great Vibes", weight: "400", script: true },
+    { id: "Pacifico", label: "Pacifico", weight: "400", script: true }
+  ];
+  var font = FONTS[0];
+  var metric = false;
+
+  // ---- unit helpers (internal units are always inches / feet) ----
+  function heightStr(inches) {
+    if (metric) return (inches * 2.54).toFixed(1).replace(/\.0$/, "") + " cm";
+    var whole = Math.round(inches * 2) / 2;
+    return (whole % 1 === 0 ? whole : whole.toFixed(1)) + " in";
+  }
+  function distStr(feet) {
+    if (metric) return Math.round(feet * 0.3048) + " m";
+    return Math.round(feet) + " ft";
+  }
+
+  function buildFontChips() {
+    var wrap = $("fonts");
+    FONTS.forEach(function (f, i) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = f.label;
+      b.style.fontFamily = "'" + f.id + "', serif";
+      b.style.fontWeight = f.weight;
+      b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
+      b.addEventListener("click", function () {
+        font = f;
+        Array.prototype.forEach.call(wrap.children, function (c) { c.setAttribute("aria-pressed", "false"); });
+        b.setAttribute("aria-pressed", "true");
+        calc();
+      });
+      wrap.appendChild(b);
+    });
+  }
+
+  // width of the name at cap height 1, in the selected font
+  function widthRatio(name) {
+    var ctx = $("measure").getContext("2d");
+    var probe = 200;
+    ctx.font = font.weight + " " + probe + "px '" + font.id + "', serif";
+    var w = ctx.measureText(name).width;
+    var m = ctx.measureText("H");
+    // cap height of the probe size, so the ratio is width-per-cap-height
+    var cap = (m.actualBoundingBoxAscent || probe * 0.72);
+    return w / cap;
+  }
+
+  function calc() {
+    var name = $("name").value.toUpperCase().replace(/\s+/g, " ").trim();
+    var loaRaw = parseFloat($("loa").value);
+    var twRaw = parseFloat($("transom").value);
+    if (!name || !loaRaw || loaRaw <= 0) { $("result").style.display = "none"; return; }
+
+    var loaFt = metric ? loaRaw / 0.3048 : loaRaw;
+    var twFt = twRaw > 0 ? (metric ? twRaw / 0.3048 : twRaw) : null;
+
+    var h = Math.min(24, Math.max(3, loaFt / 5));
+    var lo = Math.max(3, h * 0.8), hi = Math.min(28, h * 1.25);
+
+    var ratio = widthRatio(name);
+    var widthIn = h * ratio;
+    var widthFt = widthIn / 12;
+
+    $("r-height").textContent = heightStr(h);
+    $("r-range").textContent = "Sensible range: " + heightStr(lo) + " – " + heightStr(hi) + " · cap height";
+    $("r-width").textContent = metric ? (widthIn * 2.54 / 100).toFixed(2) + " m" : widthFt.toFixed(1) + " ft";
+    $("r-read").textContent = distStr(h * 10);
+    $("r-far").textContent = distStr(h * 30);
+
+    var fit = "";
+    if (twFt) {
+      var pct = 100 * widthFt / twFt;
+      if (pct < 45) fit = "Plenty of room — only " + Math.round(pct) + "% of the transom.";
+      else if (pct <= 70) fit = "Fits comfortably — " + Math.round(pct) + "% of the transom.";
+      else if (pct <= 85) fit = "Tight — " + Math.round(pct) + "% of the transom. Consider a smaller height.";
+      else fit = "Too wide — " + Math.round(pct) + "% of the transom. About " + heightStr(h * 0.7 * twFt / widthFt) + " would fit.";
+    } else {
+      fit = "Add your transom width to check the fit.";
+    }
+    $("r-fit").textContent = fit;
+
+    drawPreview(name, h, widthIn, twFt);
+    notes(name, h, widthFt, twFt);
+
+    $("cta").innerHTML = "Want “" + name.replace(/[<>&]/g, "") + "” cut in " + heightStr(h) +
+      " 316L stainless steel? → <a href=\"https://www.msquaremarine.com\" target=\"_blank\" rel=\"noopener\">msquaremarine.com</a>";
+    $("result").style.display = "block";
+    updateEmbed();
+  }
+
+  function drawPreview(name, h, widthIn, twFt) {
+    var boxW = 760, pad = 30;
+    var refIn = twFt ? twFt * 12 : widthIn * 1.35;
+    var scale = (boxW - pad * 2) / refIn;
+    var nameW = widthIn * scale;
+    var capPx = h * scale;
+    var boxTop = twFt ? 26 : 14;
+    var boxBottom = Math.max(96, capPx + boxTop + 44);
+    var boxH = boxBottom + 52;
+    var cx = boxW / 2;
+    var baseY = (boxTop + boxBottom) / 2 + capPx / 2;
+    var safe = name.replace(/[<>&]/g, "");
+
+    var svg = '<svg viewBox="0 0 ' + boxW + ' ' + boxH + '" width="100%" style="max-width:' + boxW + 'px" role="img" aria-label="Scale preview of ' + name.replace(/[<>&"]/g, "") + '">';
+    if (twFt) {
+      var tW = twFt * 12 * scale;
+      svg += '<rect x="' + (cx - tW / 2) + '" y="' + boxTop + '" width="' + tW + '" height="' + (boxBottom - boxTop) + '" rx="10" fill="#ffffff" stroke="#e6e1d6" stroke-width="2"/>' +
+        '<text x="' + cx + '" y="16" text-anchor="middle" font-family="Jost, sans-serif" font-size="11.5" letter-spacing="1" fill="#8c8578">TRANSOM ' +
+        (metric ? (twFt * 0.3048).toFixed(1) + " m" : twFt.toFixed(1) + " ft") + '</text>';
+    }
+    svg += '<text x="' + cx + '" y="' + baseY + '" text-anchor="middle" font-family="' + font.id +
+      ', serif" font-weight="' + font.weight + '" font-size="' + (capPx / 0.72) + '" fill="#1a1917">' + safe + '</text>';
+    // width dimension line below the transom box
+    var dy = boxBottom + 18;
+    svg += '<line x1="' + (cx - nameW / 2) + '" y1="' + dy + '" x2="' + (cx + nameW / 2) + '" y2="' + dy + '" stroke="#14456b" stroke-width="1.5"/>' +
+      '<line x1="' + (cx - nameW / 2) + '" y1="' + (dy - 5) + '" x2="' + (cx - nameW / 2) + '" y2="' + (dy + 5) + '" stroke="#14456b" stroke-width="1.5"/>' +
+      '<line x1="' + (cx + nameW / 2) + '" y1="' + (dy - 5) + '" x2="' + (cx + nameW / 2) + '" y2="' + (dy + 5) + '" stroke="#14456b" stroke-width="1.5"/>' +
+      '<text x="' + cx + '" y="' + (dy + 24) + '" text-anchor="middle" font-family="Jost, sans-serif" font-size="12.5" font-weight="600" fill="#14456b">' +
+      (metric ? (widthIn * 2.54 / 100).toFixed(2) + " m" : (widthIn / 12).toFixed(1) + " ft") + ' wide at ' + heightStr(h) + '</text>';
+    svg += '</svg>';
+    $("prev").innerHTML = svg;
+    $("prev-cap").textContent = twFt ? "To scale — name against transom width" : "To scale — name proportions";
+  }
+
+  function notes(name, h, widthFt, twFt) {
+    var out = "";
+    if (font.script && h < 6) {
+      out += '<div class="note"><span>⚠</span><span>Script fonts have hairline strokes. Below about 6 in cap height the thin parts get fragile in 3 mm steel — go taller, or pick a font with even stroke weight.</span></div>';
+    }
+    if (twFt && widthFt / twFt > 0.85) {
+      out += '<div class="note"><span>⚠</span><span>At this height the name nearly spans the whole transom. Most boats look better with the name at 60–70 % of the width, or split across two lines.</span></div>';
+    } else if (twFt && widthFt / twFt < 0.45) {
+      var bigger = h * (0.6 * twFt / widthFt);
+      out += '<div class="note" style="background:var(--accent-soft);border-left-color:var(--accent);color:var(--accent)"><span>↔</span><span>Room to go bigger: this name only fills ' +
+        Math.round(100 * widthFt / twFt) + ' % of the transom. Up to about ' + heightStr(Math.min(bigger, 28)) +
+        ' still sits within the usual 60 % — and reads from twice as far.</span></div>';
+    }
+    if (name.length > 14) {
+      out += '<div class="note"><span>⚠</span><span>Long names run wide fast. A condensed font (Oswald) buys roughly 20 % more length at the same height.</span></div>';
+    }
+    $("notes").innerHTML = out;
+  }
+
+  function updateEmbed() {
+    $("embed-code").value =
+      '<iframe src="https://size.msquaremarine.com/?embed=1" width="100%" height="900" style="border:1px solid #e6e1d6;border-radius:12px" title="Boat lettering size calculator" loading="lazy"></iframe>\n' +
+      '<p style="font:14px system-ui">Calculator by <a href="https://www.msquaremarine.com">M.Square Marine</a></p>';
+  }
+
+  function setUnits(m) {
+    if (m === metric) return;
+    var loa = parseFloat($("loa").value), tw = parseFloat($("transom").value);
+    metric = m;
+    $("u-imp").setAttribute("aria-pressed", String(!m));
+    $("u-met").setAttribute("aria-pressed", String(m));
+    $("loa-unit").textContent = m ? "(m)" : "(ft)";
+    $("tw-unit").textContent = m ? "(m)" : "(ft)";
+    if (loa > 0) $("loa").value = m ? (loa * 0.3048).toFixed(1) : Math.round(loa / 0.3048);
+    if (tw > 0) $("transom").value = m ? (tw * 0.3048).toFixed(1) : (tw / 0.3048).toFixed(1);
+    calc();
+  }
+  $("u-imp").addEventListener("click", function () { setUnits(false); });
+  $("u-met").addEventListener("click", function () { setUnits(true); });
+
+  ["name", "loa", "transom"].forEach(function (id) {
+    $(id).addEventListener("input", calc);
+  });
+
+  if (new URL(location.href).searchParams.get("embed")) document.body.classList.add("embed");
+
+  buildFontChips();
+  updateEmbed();
+  var families = FONTS.map(function (f) { return f.weight + " 40px '" + f.id + "'"; });
+  Promise.all(families.map(function (f) { return document.fonts.load(f); }))
+    .then(calc).catch(calc);
+})();
+</script>
+</body>
+</html>
