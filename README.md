@@ -54,4 +54,6 @@ Code: [MIT](LICENSE). Fonts are loaded from Google Fonts under the SIL Open Font
 
 ---
 
-Made by [M.Square Marine](https://www.msquaremarine.com) — laser-cut 316L stainless steel boat lettering. See also [boat-names-dataset](https://github.com/msquaremarinesolutions-create/boat-names-dataset) and [Boat Name Rank](https://names.msquaremarine.com).
+Made by [M.Square Marine](https://www.msquaremarine.com) — we hand-polish and laser-cut 316L stainless steel boat lettering, so we care about boat names professionally.
+
+Our free tools: [Boat Name Rank](https://names.msquaremarine.com/) · [Boat Lettering Size Calculator](https://size.msquaremarine.com/) · [Transom Mockup](https://mockup.msquaremarine.com/) · [Names by state](https://names.msquaremarine.com/states/) · [The dataset](https://names.msquaremarine.com/dataset/) ([on GitHub](https://github.com/msquaremarinesolutions-create/boat-names-dataset))
